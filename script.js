@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // UI Elements
     const backendStatus = document.getElementById("backendStatus");
     const statusText = backendStatus.querySelector(".status-text");
+    const inboxList = document.getElementById("inboxList");
+    const refreshInboxBtn = document.getElementById("refreshInboxBtn");
     
     const emailInput = document.getElementById("emailInput");
     const customerEmailInput = document.getElementById("customerEmail");
@@ -33,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const notificationBanner = document.getElementById("notificationBanner");
     const notificationMessage = document.getElementById("notificationMessage");
     const closeNotification = document.getElementById("closeNotification");
+    
 
     // Sample Emails
     const samples = {
@@ -42,6 +45,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     let currentAnalysis = null;
+    let currentInbox = [];
+    let selectedInboxEmail = null;
     let isBackendOffline = true;
 
     // Initialize
@@ -58,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     approveBtn.addEventListener("click", () => submitDecision("approve"));
     rejectBtn.addEventListener("click", () => submitDecision("reject"));
     closeNotification.addEventListener("click", hideNotification);
+    refreshInboxBtn.addEventListener("click", loadInbox);
 
     // Functions
     function checkInput() {
@@ -74,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 backendStatus.className = "status-indicator healthy";
                 statusText.textContent = "Backend Online";
                 checkInput();
+                loadInbox();
             } else {
                 throw new Error("Bad status");
             }
@@ -85,6 +92,94 @@ document.addEventListener("DOMContentLoaded", () => {
             showNotification("Backend is currently offline or unreachable.", "error");
         }
     }
+    async function loadInbox() {
+    try {
+        const response = await fetch(`${CONFIG.BACKEND_URL}/api/inbox`);
+
+        if (!response.ok) {
+            throw new Error("Unable to load inbox.");
+        }
+
+        currentInbox = await response.json();
+        renderInbox();
+
+    } catch (error) {
+        inboxList.innerHTML = `
+            <div class="inbox-empty">
+                Failed to load inbox.
+            </div>
+        `;
+    }
+}
+
+function renderInbox() {
+
+    if (!currentInbox.length) {
+        inboxList.innerHTML = `
+            <div class="inbox-empty">
+                Inbox is empty.
+            </div>
+        `;
+        return;
+    }
+
+    inboxList.innerHTML = "";
+
+    currentInbox.forEach((email) => {
+
+        const item = document.createElement("div");
+
+        item.className = "inbox-item";
+
+        item.innerHTML = `
+            <div class="inbox-subject">${email.subject}</div>
+            <div class="inbox-email">${email.customer_email}</div>
+            <div class="inbox-time">${formatTime(email.received_at)}</div>
+        `;
+
+        item.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".inbox-item")
+                .forEach(card => card.classList.remove("active"));
+
+            item.classList.add("active");
+
+            selectInboxEmail(email);
+
+        });
+
+        inboxList.appendChild(item);
+
+    });
+
+}
+
+function selectInboxEmail(email) {
+
+    selectedInboxEmail = email;
+
+    customerEmailInput.value = email.customer_email;
+
+    emailInput.value = email.body;
+
+    resultsSection.classList.add("hidden");
+
+    currentAnalysis = null;
+
+    checkInput();
+
+}
+
+function formatTime(timestamp) {
+
+    if (!timestamp) return "";
+
+    const date = new Date(timestamp);
+
+    return date.toLocaleString();
+
+}
 
     async function performAnalysis() {
         const emailText = emailInput.value.trim();
