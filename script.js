@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const statusText = backendStatus.querySelector(".status-text");
     
     const emailInput = document.getElementById("emailInput");
+    const customerEmailInput = document.getElementById("customerEmail");
     const analyzeBtn = document.getElementById("analyzeBtn");
     const analyzeSpinner = document.getElementById("analyzeSpinner");
     const analyzeBtnText = analyzeBtn.querySelector(".btn-text");
@@ -52,6 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("btnRefundRequest").addEventListener("click", () => { emailInput.value = samples.refund; checkInput(); });
     
     emailInput.addEventListener("input", checkInput);
+    customerEmailInput.addEventListener("input", checkInput);
     analyzeBtn.addEventListener("click", performAnalysis);
     approveBtn.addEventListener("click", () => submitDecision("approve"));
     rejectBtn.addEventListener("click", () => submitDecision("reject"));
@@ -60,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Functions
     function checkInput() {
         if (!isBackendOffline) {
-            analyzeBtn.disabled = emailInput.value.trim().length === 0;
+            analyzeBtn.disabled = emailInput.value.trim().length === 0 || customerEmailInput.value.trim().length === 0;
         }
     }
 
@@ -172,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 resultsSection.classList.add("hidden");
                 emailInput.value = "";
+                customerEmailInput.value = "";
                 currentAnalysis = null;
                 checkInput();
             }, 1500);
