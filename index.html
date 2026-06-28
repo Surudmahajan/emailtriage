@@ -26,7 +26,8 @@
 
         <main>
             <!-- Input Section -->
-            <section class="card glass" id="inboxSection">
+            <div class="workspace">
+           <aside class="card glass" id="inboxSection">
     <div class="card-header">
         <h2>Inbox</h2>
         <button class="btn-sm btn-outline" id="refreshInboxBtn">
@@ -39,15 +40,10 @@
             Loading emails...
         </div>
     </div>
-</section>
-            <section class="card glass">
+</aside>
+            <section class="card glass" id="inputSection">
                 <div class="card-header">
                     <h2>Incoming Email</h2>
-                    <div class="quick-actions">
-                        <button class="btn-sm btn-outline" id="btnTechIssue">Technical Issue</button>
-                        <button class="btn-sm btn-outline" id="btnBillingIssue">Billing Issue</button>
-                        <button class="btn-sm btn-outline" id="btnRefundRequest">Refund Request</button>
-                    </div>
                 </div>
                 <div class="input-group">
                    <input
@@ -64,6 +60,7 @@
                     <div class="spinner hidden" id="analyzeSpinner"></div>
                 </button>
             </section>
+            </div>
 
             <!-- Results Section (Hidden initially) -->
             <section id="resultsSection" class="results-grid hidden">
