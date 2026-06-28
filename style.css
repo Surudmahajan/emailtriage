@@ -181,6 +181,7 @@ body {
     margin-bottom: 1rem;
 }
 
+input[type="email"],
 textarea {
     width: 100%;
     background: rgba(0, 0, 0, 0.2);
@@ -190,13 +191,28 @@ textarea {
     color: var(--text-primary);
     font-family: var(--font-family);
     font-size: 1rem;
-    resize: vertical;
     transition: border-color 0.2s ease;
 }
 
+input[type="email"] {
+    height: 52px;
+    margin-bottom: 0.75rem;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 180px;
+}
+
+input[type="email"]:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
+}
+
+input[type="email"]::placeholder,
+textarea::placeholder {
+    color: var(--text-secondary);
 }
 
 /* Results Grid */
