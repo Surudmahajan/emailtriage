@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             currentAnalysis = await response.json();
-            currentAnalysis.customer_email = emailInput.value.trim();
+            currentAnalysis.customer_email = customerEmailInput.value.trim();
             populateResults(currentAnalysis);
             resultsSection.classList.remove("hidden");
             
