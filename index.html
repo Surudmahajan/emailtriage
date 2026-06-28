@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Email Triage Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Notification Banner -->
+    <div id="notificationBanner" class="notification hidden">
+        <span id="notificationMessage"></span>
+        <button id="closeNotification" class="close-btn">&times;</button>
+    </div>
+
+    <div class="container">
+        <!-- Header / Hero Section -->
+        <header class="hero">
+            <h1>AI Email Triage Agent</h1>
+            <p>Intelligent Customer Support Automation with Human-in-the-Loop Approval</p>
+            <div id="backendStatus" class="status-indicator checking">
+                <span class="status-dot"></span> <span class="status-text">Checking Backend Status...</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Input Section -->
+            <section class="card glass">
+                <div class="card-header">
+                    <h2>Incoming Email</h2>
+                    <div class="quick-actions">
+                        <button class="btn-sm btn-outline" id="btnTechIssue">Technical Issue</button>
+                        <button class="btn-sm btn-outline" id="btnBillingIssue">Billing Issue</button>
+                        <button class="btn-sm btn-outline" id="btnRefundRequest">Refund Request</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <textarea id="emailInput" rows="6" placeholder="Paste customer email here..."></textarea>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary" disabled>
+                    <span class="btn-text">Analyze Email</span>
+                    <div class="spinner hidden" id="analyzeSpinner"></div>
+                </button>
+            </section>
+
+            <!-- Results Section (Hidden initially) -->
+            <section id="resultsSection" class="results-grid hidden">
+                <!-- Metadata Cards -->
+                <div class="metadata-grid">
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">Ticket ID</span>
+                        <span class="metadata-value" id="resTicketId">-</span>
+                    </div>
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">Category</span>
+                        <span class="metadata-value tag" id="resCategory">-</span>
+                    </div>
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">Priority</span>
+                        <span class="metadata-value tag" id="resPriority">-</span>
+                    </div>
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">Sentiment</span>
+                        <span class="metadata-value tag" id="resSentiment">-</span>
+                    </div>
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">Assigned Team</span>
+                        <span class="metadata-value" id="resAssignedTeam">-</span>
+                    </div>
+                    <div class="card glass metadata-card">
+                        <span class="metadata-label">SLA (ETA)</span>
+                        <span class="metadata-value" id="resEta">-</span>
+                    </div>
+                    
+                    <div class="card glass metadata-card full-width">
+                        <div class="confidence-header">
+                            <span class="metadata-label">AI Confidence</span>
+                            <span class="metadata-value confidence-value" id="resConfidenceText">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="resConfidenceBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Cards -->
+                <div class="card glass full-width">
+                    <div class="card-header">
+                        <h2>Analysis Summary & Intent</h2>
+                    </div>
+                    <div class="intent-group">
+                        <strong>Intent:</strong> <span id="resIntent">-</span>
+                    </div>
+                    <p id="resSummary" class="summary-text">-</p>
+                </div>
+
+                <div class="card glass full-width">
+                    <div class="card-header">
+                        <h2>Suggested Reply (Editable)</h2>
+                    </div>
+                    <div class="input-group">
+                        <textarea id="replyInput" rows="8"></textarea>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons full-width">
+                    <button id="rejectBtn" class="btn btn-danger">
+                        <span class="btn-text">Reject (Do Not Send)</span>
+                        <div class="spinner hidden" id="rejectSpinner"></div>
+                    </button>
+                    <button id="approveBtn" class="btn btn-success">
+                        <span class="btn-text">Approve & Send</span>
+                        <div class="spinner hidden" id="approveSpinner"></div>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
