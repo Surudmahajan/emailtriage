@@ -348,3 +348,59 @@ textarea::placeholder {
         width: 100%;
     }
 }
+
+/* ===========================
+   Inbox Section
+=========================== */
+
+.inbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.inbox-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.inbox-item:hover {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.12);
+    transform: translateY(-2px);
+}
+
+.inbox-item.active {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.18);
+}
+
+.inbox-subject {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+}
+
+.inbox-email {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.inbox-time {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+}
+
+.inbox-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 2rem;
+}
