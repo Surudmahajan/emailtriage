@@ -348,6 +348,18 @@ textarea::placeholder {
         width: 100%;
     }
 }
+@media (max-width: 900px) {
+
+    .workspace {
+        flex-direction: column;
+    }
+
+    #inboxSection {
+        width: 100%;
+        position: static;
+    }
+
+}
 
 /* ===========================
    Inbox Section
@@ -403,4 +415,26 @@ textarea::placeholder {
     text-align: center;
     color: var(--text-secondary);
     padding: 2rem;
+}
+
+/* ==========================
+   Workspace Layout
+========================== */
+
+.workspace {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+#inboxSection {
+    width: 320px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 2rem;
+}
+
+#inputSection {
+    flex: 1;
+    min-width: 0;
 }
