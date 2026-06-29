@@ -52,10 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initialize
     checkBackendHealth();
 
-    // Event Listeners
-    document.getElementById("btnTechIssue").addEventListener("click", () => { emailInput.value = samples.tech; checkInput(); });
-    document.getElementById("btnBillingIssue").addEventListener("click", () => { emailInput.value = samples.billing; checkInput(); });
-    document.getElementById("btnRefundRequest").addEventListener("click", () => { emailInput.value = samples.refund; checkInput(); });
+  
     
     emailInput.addEventListener("input", checkInput);
     customerEmailInput.addEventListener("input", checkInput);
